@@ -17,6 +17,8 @@ pip install -e .
 
 ## Pre-request
 
+Replace `wandb_entity` and `wandb_project` in both cfgs.
+
 Run `python train_go2.py` and record the execution time.
 
 ## Stage 1: Robot Pose Generation
