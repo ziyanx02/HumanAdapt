@@ -1,0 +1,11 @@
+robot:
+  name: leap_hand
+  asset_path: urdf/leap_hand/leap_hand_right_glb.urdf
+  scale: 2.0
+  body_name: base
+control:
+  control_freq: 50
+  kp: 40.0
+  kd: 1.0
+  armature: 0.05
+  damping: 0.0

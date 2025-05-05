@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<robot name="tripod">
+
+  <!-- Base -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.04" radius="0.035"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="gray">
+        <color rgba="0.6 0.6 0.6 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.035"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <link name="aux_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.3" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="aux_link_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="aux_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="aux_link1">
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.04"/>
+      </geometry>
+      <origin xyz="0 0 0.3" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="aux_link_joint1" type="fixed">
+    <parent link="aux_link"/>
+    <child link="aux_link1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ========= LEG 1 ========= -->
+  <link name="leg1_joint_base">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg1_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg1_joint_base"/>
+    <origin xyz="0.03 0 0" rpy="0 0 3.1415"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1" velocity="1" lower="0" upper="1.0"/>
+  </joint>
+
+  <link name="leg1_outer">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg1_outer_fixed" type="fixed">
+    <parent link="leg1_joint_base"/>
+    <child link="leg1_outer"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="leg1_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.015"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg1_slide" type="prismatic">
+    <parent link="leg1_joint_base"/>
+    <child link="leg1_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="10" velocity="0.2" lower="0.0" upper="0.4"/>
+  </joint>
+
+  <link name="leg1_tip">
+    <visual>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="leg1_tip_fixed" type="fixed">
+    <parent link="leg1_link"/>
+    <child link="leg1_tip"/>
+    <origin xyz="0 0 -0.21" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ========= LEG 2 ========= -->
+  <link name="leg2_joint_base">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg2_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg2_joint_base"/>
+    <origin xyz="-0.015 0.026 0" rpy="0 0 -1.0472"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1" velocity="1" lower="0.0" upper="1.0"/>
+  </joint>
+
+  <link name="leg2_outer">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg2_outer_fixed" type="fixed">
+    <parent link="leg2_joint_base"/>
+    <child link="leg2_outer"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="leg2_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.015"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg2_slide" type="prismatic">
+    <parent link="leg2_joint_base"/>
+    <child link="leg2_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="10" velocity="0.2" lower="0.0" upper="0.4"/>
+  </joint>
+
+  <link name="leg2_tip">
+    <visual>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="leg2_tip_fixed" type="fixed">
+    <parent link="leg2_link"/>
+    <child link="leg2_tip"/>
+    <origin xyz="0 0 -0.21" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ========= LEG 3 ========= -->
+  <link name="leg3_joint_base">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg3_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg3_joint_base"/>
+    <origin xyz="-0.015 -0.026 0" rpy="0 0 1.0472"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1" velocity="1" lower="0" upper="1.0"/>
+  </joint>
+
+  <link name="leg3_outer">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg3_outer_fixed" type="fixed">
+    <parent link="leg3_joint_base"/>
+    <child link="leg3_outer"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="leg3_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.015"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="leg3_slide" type="prismatic">
+    <parent link="leg3_joint_base"/>
+    <child link="leg3_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="10" velocity="0.2" lower="0.0" upper="0.4"/>
+  </joint>
+
+  <link name="leg3_tip">
+    <visual>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="leg3_tip_fixed" type="fixed">
+    <parent link="leg3_link"/>
+    <child link="leg3_tip"/>
+    <origin xyz="0 0 -0.21" rpy="0 0 0"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,187 @@
+learning:
+  algorithm:
+    class_name: TDO
+    clip_param: 0.2
+    desired_kl: 0.01
+    entropy_coef: 0.01
+    gamma: 0.99
+    lam: 0.95
+    learning_rate: 0.001
+    max_grad_norm: 1.0
+    num_learning_epochs: 5
+    num_mini_batches: 4
+    schedule: adaptive
+    use_clipped_value_loss: true
+    value_loss_coef: 1.0
+    td_entropy_coef: 0.0
+    return_boosting_coef: 0.0
+    action_noise_threshold: 0.0
+  policy:
+    activation: elu
+    actor_hidden_dims:
+    - 512
+    - 256
+    - 128
+    class_name: ActorCriticTDO
+    critic_hidden_dims:
+    - 512
+    - 256
+    - 128
+    init_noise_std: 1.0
+  temporal_distribution:
+    learning_rate: 0.001
+    class_name: TemporalDistribution
+  PPO: false
+  empirical_normalization: false
+  exp_name: null
+  num_steps_per_env: 24
+  reset_rate: 0.0
+  print_infos: true
+  record_interval: 50
+  save_interval: 100
+  seed: 1
+  wandb_entity: ziyanx02
+  wandb_project: Gait
+environment:
+  PPO: false
+  urdf_path: urdf/leap_hand/leap_hand_right_glb.urdf
+  links_to_keep:
+  - thumb_fingertip
+  - fingertip
+  - fingertip_2
+  - fingertip_3
+  num_actions: 16
+  num_dofs: 16
+  num_states: 42
+  termination_contact_link_names:
+  - base
+  penalized_contact_link_names:
+  - base
+  - mcp_joint
+  - mcp_joint_2
+  - mcp_joint_3
+  - thumb_temp_base
+  - pip
+  - pip_2
+  - pip_3
+  - thumb_pip
+  - dip
+  - dip_2
+  - dip_3
+  - thumb_dip
+  body_link_name:
+  - base
+  PD_stiffness:
+    ? ''
+    : 40.0
+  PD_damping:
+    ? ''
+    : 1.0
+  armature: 0.05
+  dof_damping: 0.0
+  action_scale: 0.25
+  clip_actions: 100.0
+  control_freq: 50
+  decimation: 4
+  delay_action: true
+  dof_names:
+  - '0'
+  - '1'
+  - '10'
+  - '11'
+  - '12'
+  - '13'
+  - '14'
+  - '15'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  episode_length_s: 20.0
+  period_length_s: 0.5
+  use_timeout: true
+  reset_after_termination: true
+  termination_if_height_lower_than: 0.0
+  termination_if_pitch_greater_than: 0.4
+  termination_if_roll_greater_than: 0.4
+  base_init_pos:
+  - 0.0
+  - 0.0
+  - 0.24119752645492554
+  base_init_quat:
+  - 0.7071067690849304
+  - 0.0
+  - 0.7071068286895752
+  - 3.615632238052058e-09
+  default_joint_angles:
+    '0': 0.35635143518447876
+    '1': 0.45279353857040405
+    '10': 1.2307071685791016
+    '11': 0.21756631135940552
+    '12': 0.027087725698947906
+    '13': 2.0434203147888184
+    '14': 1.3953828811645508
+    '15': -1.3330131769180298
+    '2': 1.8812484741210938
+    '3': -0.2491907775402069
+    '4': 0.6785317063331604
+    '5': 0.5092164874076843
+    '6': 0.015199482440948486
+    '7': 1.7851921319961548
+    '8': 1.0470000505447388
+    '9': 0.4859384000301361
+  resampling_time_s: 4.0
+  randomize_base_mass: true
+  added_mass_range:
+  - -1.0
+  - 3.0
+  randomize_com_displacement: false
+  com_displacement_range:
+  - -0.01
+  - 0.01
+  randomize_friction: false
+  friction_range:
+  - 0.2
+  - 1.5
+  randomize_kd_scale: false
+  kd_scale_range:
+  - 0.8
+  - 1.2
+  randomize_kp_scale: false
+  kp_scale_range:
+  - 0.8
+  - 1.2
+  randomize_motor_offset: false
+  motor_offset_range:
+  - -0.02
+  - 0.02
+  randomize_motor_strength: false
+  motor_strength_range:
+  - 0.9
+  - 1.1
+  pos_randomization: 0.0
+  rot_randomization: 0.1
+  dof_pos_randomization: 0.3
+  max_push_vel_xy: 1.0
+  push_interval_s: -1
+  observation:
+    num_obs: 51
+    num_priv_obs: 70
+    obs_noise:
+      ang_vel: 0.1
+      dof_pos: 0.01
+      dof_vel: 0.5
+      gravity: 0.02
+    obs_scales:
+      ang_vel: 1.0
+      dof_pos: 1.0
+      dof_vel: 0.05
+      lin_vel: 1.0
+  reward:
+    reward_scales:
+      alive: 1.0
+      # reward scales here
