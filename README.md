@@ -1,5 +1,20 @@
 # Human Experiment
 
+## Installation
+
+### Genesis
+
+```
+cd Genesis
+pip install -e .
+```
+
+### rsl_rl
+```
+cd rsl_rl
+pip install -e .
+```
+
 ## Pre-request
 
 Run `python train_go2.py` and record the execution time.
