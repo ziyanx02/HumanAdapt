@@ -8,7 +8,7 @@ from robot_display.gui_display import GUIDisplay
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--robot', type=str, default='leap_hand')
 parser.add_argument('-n', '--name', type=str, default=None)
-parser.add_argument('-s', '--save', type=str, default=None)
+parser.add_argument('-s', '--save', type=str, default='dof_pos')
 args = parser.parse_args()
 
 cfg = yaml.safe_load(open(f"./cfgs/{args.robot}/basic.yaml"))
@@ -17,21 +17,11 @@ if args.name is not None:
 
 def save(display):
     cfg["robot"]["link_names"] = display.robot.link_name
-    cfg["pose"] = cfg.get("pose", {})
-    cfg["pose"]["base_init_pos"] = [round(val, 5) for val in display.robot.base_pos.tolist()]
-    cfg["pose"]["base_init_quat"] = [round(val, 5) for val in display.robot.base_quat.tolist()]
-    cfg["pose"]["body_init_pos"] = [round(val, 5) for val in display.robot.body_pos.tolist()]
-    cfg["pose"]["body_init_quat"] = [round(val, 5) for val in display.robot.body_quat.tolist()]
+    cfg["robot"]["base_init_quat"] = [round(val, 5) for val in display.robot.base_quat.tolist()]
+    cfg["robot"]["body_init_quat"] = [round(val, 5) for val in display.robot.body_quat.tolist()]
     dof_pos = display.robot.target_dof_pos.tolist()
-    cfg["pose"]["default_joint_angles"] = {display.robot.dof_name[i] : round(dof, 5) for i, dof in enumerate(dof_pos)}
-    cfg["robot"]["diameter"] = float(round(display.robot.diameter, 5))
-    cfg["robot"]["mass"] = float(round(display.robot.mass, 5))
+    cfg["robot"]["default_dof_pos"] = {display.robot.dof_name[i] : round(dof, 5) for i, dof in enumerate(dof_pos)}
 
-    foot_pos = display.robot.foot_pos
-    foot_pos_list = []
-    for i in range(foot_pos.shape[0]):
-        foot_pos_list.append([round(foot_pos[i][0].item(), 5), round(foot_pos[i][1].item(), 2)])
-    cfg["pose"]["gait"]["stationary_position"] = foot_pos_list
     yaml.safe_dump(cfg, open(f"./cfgs/{args.robot}/{args.save}.yaml", "w"), sort_keys=False)
     print("Save to", f"./cfgs/{args.robot}/{args.save}.yaml")
 

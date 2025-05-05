@@ -27,5 +27,5 @@ agent = Viewer(cfg_path, vis_options=vis_options)
 all_visible_links, _ = agent.render_from_xyz(agent.get_body_pos(), log_dir=log_dir)
 
 print("Links visible in the rendered images:")
-for i in all_visible_links:
+for i in all_visible_links[:-1]:
     print(f"link {i}:", agent.display.links[i].name)

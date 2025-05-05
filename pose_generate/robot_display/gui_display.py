@@ -22,21 +22,19 @@ class GUIDisplay:
     def setup_robot(self):
         if "control" not in self.cfg.keys():
             self.cfg["control"] = {"control_freq": 50}
-        if "foot_names" not in self.cfg["robot"].keys():
-            self.cfg["robot"]["foot_names"] = []
         if "links_to_keep" not in self.cfg["robot"].keys():
             self.cfg["robot"]["links_to_keep"] = []
-        pose_cfg = self.cfg.get("pose", {})
+            self.cfg["robot"]["body_init_quat"]
         self.robot = Robot(
             asset_file=self.cfg["robot"]["asset_path"],
-            foot_names=self.cfg["robot"]["foot_names"],
+            foot_names=None,
             links_to_keep=self.cfg["robot"]["links_to_keep"],
             scale=self.cfg["robot"]["scale"],
             fps=self.cfg["control"]["control_freq"],
             vis_options=self.vis_options,
-            init_pos=pose_cfg.get("body_init_pos", [0, 0, 0]),
-            init_quat=pose_cfg.get("body_init_quat", [1, 0, 0, 0]),
-            init_dof_pos=pose_cfg.get("default_joint_angles", None),
+            init_pos=self.cfg["robot"].get("body_init_pos", [0, 0, 0]),
+            init_quat=self.cfg["robot"].get("body_init_quat", [1, 0, 0, 0]),
+            init_dof_pos=self.cfg["robot"].get("default_dof_pos", None),
         )
         if "body_name" in self.cfg["robot"].keys():
             self.robot.set_body_link(self.robot.get_link_by_name(self.cfg["robot"]["body_name"]))

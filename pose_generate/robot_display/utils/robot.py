@@ -75,13 +75,16 @@ class Robot:
         self.foot_links = []
         self.foot_joints = []
         is_availible = [True for link in self.links]
-        for name in foot_names:
-            for i, link in enumerate(self.links):
-                if is_availible[i] and link.name == name:
-                    is_availible[i] = False
-                    self.foot_names.append(link.name)
-                    self.foot_links.append(link)
-                    self.foot_joints.append(link.joint)
+        for i, link in enumerate(self.links):
+            if is_availible[i] and link.is_leaf:
+                is_availible[i] = False
+                self.foot_names.append(link.name)
+                self.foot_links.append(link)
+                self.foot_joints.append(link.joint)
+
+        self.scene.add_entity(
+            gs.morphs.URDF(file='urdf/plane/plane.urdf', pos=(0, 0, -0.2), fixed=True),
+        )
 
         self.camera = self.scene.add_camera(
             pos=np.array([1, 0, 0]),
@@ -136,7 +139,7 @@ class Robot:
         self.num_joints = len(self.joint_name)
 
         self.link_colors = []
-        for _ in range(self.num_links):
+        for _ in range(100):
             self.link_colors.append(np.random.randint(0, 256, 3))
 
         self.link_adjacency_map = [[False for _ in range(self.num_links)] for _ in range(self.num_links)]

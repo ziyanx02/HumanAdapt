@@ -16,17 +16,18 @@ if args.cfg is not None:
     cfg = yaml.safe_load(open(f"./cfgs/{args.robot}/{args.cfg}.yaml"))
 
 def save(display):
-    cfg["robot"]["default_body_quat"] = [round(val, 4) for val in display.robot.target_body_quat.tolist()]
+    cfg["robot"]["base_init_quat"] = [round(val, 5) for val in display.robot.base_quat.tolist()]
+    cfg["robot"]["body_init_quat"] = [round(val, 4) for val in display.robot.target_body_quat.tolist()]
     yaml.safe_dump(cfg, open(f"./cfgs/{args.robot}/{args.name}_body_rot.yaml", "w"))
     print("Save to", f"./cfgs/{args.robot}/{args.name}_body_rot.yaml")
 
 class VisOptions:
     def __init__(self):
         self.visualize_skeleton = False
-        self.visualize_robot_frame = True
+        self.visualize_robot_frame = False
         self.visualize_target_foot_pos = False
         self.merge_fixed_links = True
-        self.show_world_frame = False
+        self.show_world_frame = True
         self.shadow = False
         self.background_color = (0.8, 0.8, 0.8)
 
