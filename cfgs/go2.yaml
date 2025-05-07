@@ -93,8 +93,8 @@ environment:
     : 30.0
   PD_damping:
     ? ''
-    : 2.0
-  armature: 0.0
+    : 1.5
+  armature: 0.05
   dof_damping: 0.0
   action_scale: 0.25
   clip_actions: 100.0
@@ -131,18 +131,18 @@ environment:
   - 0.0
   - 0.0
   default_joint_angles:
-    FL_calf_joint: -1.4434962272644043
-    FL_hip_joint: -0.19204583764076233
-    FL_thigh_joint: 0.8555803298950195
-    FR_calf_joint: -1.4318302869796753
-    FR_hip_joint: 0.19008463621139526
-    FR_thigh_joint: 0.8537113666534424
-    RL_calf_joint: -1.442496418952942
-    RL_hip_joint: -0.19020424783229828
-    RL_thigh_joint: 0.5835341811180115
-    RR_calf_joint: -1.4434244632720947
-    RR_hip_joint: 0.19196908175945282
-    RR_thigh_joint: 0.5840409398078918
+    FL_calf_joint: -1.5
+    FL_hip_joint: 0.0
+    FL_thigh_joint: 0.8
+    FR_calf_joint: -1.5
+    FR_hip_joint: 0.0
+    FR_thigh_joint: 0.8
+    RL_calf_joint: -1.5
+    RL_hip_joint: 0.0
+    RL_thigh_joint: 1.0
+    RR_calf_joint: -1.5
+    RR_hip_joint: 0.0
+    RR_thigh_joint: 1.0
   resampling_time_s: 4.0
   randomize_base_mass: true
   added_mass_range:
@@ -196,24 +196,24 @@ environment:
     - 0.5
     - 0.5
     frequency:
-    - 3.0
-    - 3.0
-    - 3.0
-    - 3.0
+    - 2.0
+    - 2.0
+    - 2.0
+    - 2.0
     offset:
     - 0.0
     - 0.5
     - 0.5
     - 0.0
     stationary_position:
-    - - 0.14925041794776917
-      - -0.08012691140174866
-    - - 0.15073110163211823
-      - 0.07975491136312485
-    - - -0.1495133638381958
-      - -0.07980997860431671
-    - - -0.14948192238807678
-      - 0.08036674559116364
+    - - 0.2
+      - -0.15
+    - - 0.2
+      - 0.15
+    - - -0.2
+      - -0.15
+    - - -0.2
+      - 0.15
     feet_height_target:
     - 0.1318390488624573
     - 0.1318390488624573
@@ -236,20 +236,20 @@ environment:
     reward_scales:
       lin_vel: 1.0
       ang_vel: 0.5
-      alive: 10.0
+      alive: 3.0
       ang_vel_xy: -0.05
       base_height: -30.0
       dof_acc: -0.05
-      dof_vel: -0.01
+      dof_vel: -0.0
       dof_pos_diff: -0.1
       lin_vel_z: -2.0
       orientation: -5.0
-      contact_force: -5.0
-      contact_vel: -5.0
-      feet_height: -400.0
-      feet_pos: -30.0
-      action_smoothness_1: -0.1
-      action_smoothness_2: -0.1
+      contact_force: -1.0
+      contact_vel: -1.0
+      feet_height: -10.0
+      feet_pos: -10.0
+      action_smoothness_1: -0.5
+      action_smoothness_2: -0.5
       torques: -0.0001
     soft_dof_pos_limit: 0.9
     tracking_sigma: 0.25

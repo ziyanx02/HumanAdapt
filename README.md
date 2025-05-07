@@ -79,6 +79,6 @@ Stop the timer when you can run `python train_leaphand.py` bug-free. Record the 
 
 Start the timer.
 
-Now feel free to adjust the reward functions and scales, but remember to run at most 4 parallel training at the same time on the remote machine. Please stop starting new runs after (1.5 hour - *pose generation* - *code extraction*) * *execution* / 10 min. But you could wait until all runs finished.
+Now feel free to adjust the reward functions and scales, but remember to run at most 4 parallel training at the same time on the remote machine. Please stop starting new runs after (1.5 hour - *pose generation* - *code extraction*) * *execution* / 30 min. But you could wait until all runs finished.
 
 Run `python train_leaphand.py --eval -e EXP_NAME --ckpt NUM_CKPT` to get the metrics of your **BEST** checkpoint.
