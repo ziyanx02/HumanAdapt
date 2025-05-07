@@ -19,6 +19,14 @@ cd rsl_rl
 pip install -e .
 ```
 
+### Other Packages
+
+```
+pip install yaml
+pip install wandb
+pip install tensorboard
+```
+
 ## Pre-request
 
 Replace `wandb_entity` and `wandb_project` in the cfgs `cfgs/`.
