@@ -1,39 +1,77 @@
-# Human Experiment
+# Walk a Leap_hand
 
-This experiment is for benchmarking human's reward engineering capability and effeciency. You should set up 1 local machine (refered as local machine) supporting windowed viewer for adjusting the robot pose and 1 remote/local (the number of grphic cards used should not exceed 4, refered as remote machine) for parralel training. A timer is need.
+Training a quadruped robot (Go2) to walk is the most easy locomotion task. However, training a `leap_hand` to walk might not be a trivial task, which may need careful pose design and reward tunning.
+
+In this experiment, as an robotic expert, you are required to train a RL(Reinforcement Learning) policy that makes the `leap_hand` walk, by the provided framework on Genesis (https://genesis-world.readthedocs.io/en/latest/).
+
+Like the other frameworks you may have learned in your robotic course, our framework consists of:
+- Environment: `/envs`
+- Configuration: `/cfgs`
+- Algorithm: `/rsl_rl`
+- Training scripts: `train_go2.py`, `train_leaphand.py`
+- Other auxiliary scripts: `/pose_generate`
+
+All you need to do is to **follow the instructions in the last section step by step:**
+- design a reasonable pose for `leap_hand` to walk
+- write the environemnt code for `leap_hand` with a `Go2` example
+- find a proper reward parameters to walk the `leap_hand`.
+
+This task is as easy as the basic RL homework in your robotic course. For a robotic expert like you, the estimated used time is not more than 2 hours. **Take it easy and have fun!**
+
+
+## Constraints
+
+This experiment is for benchmarking human's reward engineering capability and effeciency. 
+
+You should set up **1 local machine** (refered as local machine) supporting windowed viewer for adjusting the robot pose and **1 remote/local** (refered as remote machine) for parrallel training.
+
+It's highly recommended to use multiple cards to accelerate your exploration. However, the number of parallel training processes must **NOT** exceed 4. 
+
+A timer is needed for scientific research. **You are required to record the consuming time of each stage by yourself.**
 
 ## Installation
 
-On both local machine and remote machine, install Genesis and rsl_rl according to following commands.
+It's highly recommended to use Linux as your system. 
 
-### Genesis
+On both local machine and remote machine, install pytorch, Genesis and rsl_rl according to following commands.
+
+- Create an environment with `python>=3.10` and `pytorch`. Skip if you already have. 
+
+```
+conda create -n humanadapt python=3.12 # Conda environment with python>=3.10 is recommended.
+conda activate humanadapt 
+pip3 install torch torchvision torchaudio # install pytorch
+```
+- Install `Genesis`
 
 ```
 cd Genesis
 pip install -e .
 ```
 
-### rsl_rl
+- Install `rsl_rl`
 ```
 cd rsl_rl
 pip install -e .
 ```
 
-### Other Packages
+- Install other Packages
 
 ```
-pip install yaml
+pip install pyyaml
 pip install wandb
 pip install tensorboard
 ```
 
-## Pre-request
+## Tasks
 
-Replace `wandb_entity` and `wandb_project` in the cfgs `cfgs/`.
+### Stage 0: Pre-Request
+
+Replace `wandb_entity` and `wandb_project` in the cfgs `cfgs/` with  your account.
 
 Run `python train_go2.py` on the remote machine and use the timer to record the entire *execution* time (or simply take the ETA).
 
-## Stage 1: Robot Pose Generation
+### Stage 1: Robot Pose Generation
 
 Start the timer.
 
@@ -65,7 +103,7 @@ to adjust the robot pose by controling each dof.
 
 Stop the timer and record the time used as *pose generation*.
 
-## Stage 2: Code Refactor
+### Stage 2: Code Refactor
 
 Start the timer.
 
@@ -75,7 +113,7 @@ Unless necessary, do not create new functions in both wrappers. You can run `pyt
 
 Stop the timer when you can run `python train_leaphand.py` bug-free. Record the time as *code extraction*. In this stage, there is no need to tune the rewards.
 
-## Stage 3: Reward Engineering
+### Stage 3: Reward Engineering
 
 Start the timer.
 
