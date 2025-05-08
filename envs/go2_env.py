@@ -501,6 +501,8 @@ class Go2:
             (self.num_envs, len(self.feet_link_indices), 3), device=self.device, dtype=gs.tc_float,
         )
 
+        self._load_gait(self.env_cfg['gait'])
+
     def _prepare_obs_noise(self):
         self.obs_noise[:3] = self.obs_cfg['obs_noise']['ang_vel']
         self.obs_noise[3:6] = self.obs_cfg['obs_noise']['gravity']
@@ -829,6 +831,8 @@ class Go2:
 
         self.desired_feet_pos_local[:, :, 0] = desired_xs_norm + (desired_xs_offset + desired_yaw_to_xs_offset)
         self.desired_feet_pos_local[:, :, 1] = desired_ys_norm + (desired_ys_offset + desired_yaw_to_ys_offset)
+
+        # print(self.desired_feet_pos_local)
 
         # Feet positions in local frame
         center = self.body_pos.clone().unsqueeze(1) # self.com.unsqueeze(1)
@@ -1340,6 +1344,24 @@ class Go2:
 
         com[2] = 0.02
         self.scene.draw_debug_sphere(pos=com, radius=0.02, color=(0, 0, 1, 0.7))
+
+        num_feet = len(self.feet_link_indices)
+        feet_pos = self.feet_pos_local.clone()
+        body_quat_rel = gs_quat_mul(self.body_quat, gs_inv_quat(self.body_init_quat.reshape(1, -1).repeat(self.num_envs, 1)))
+        for i in range(num_feet):
+            feet_pos[:, i, :] = gs_quat_apply_yaw(body_quat_rel, feet_pos[:, i, :])
+        feet_pos[:, :, :2] += self.body_pos.unsqueeze(1)[:, :, :2]
+
+        desired_feet_pos = self.desired_feet_pos_local.clone()
+        for i in range(num_feet):
+            desired_feet_pos[:, i, :] = gs_quat_apply_yaw(body_quat_rel, desired_feet_pos[:, i, :])
+        desired_feet_pos[:, :, :2] += self.body_pos.unsqueeze(1)[:, :, :2]
+
+        # print(desired_feet_pos)
+
+        for i in range(num_feet):
+            # self.scene.draw_debug_sphere(pos=feet_pos[0, i, :], radius=0.05, color=(0, 1, 0, 0.7))
+            self.scene.draw_debug_sphere(pos=desired_feet_pos[0, i, :], radius=0.05, color=(1, 1 - self.desired_contact_states[0, i].cpu(), 0, 0.7))
 
     def _set_camera(self):
         ''' Set camera position and direction
