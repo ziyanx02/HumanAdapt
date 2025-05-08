@@ -24,7 +24,6 @@ class GUIDisplay:
             self.cfg["control"] = {"control_freq": 50}
         if "links_to_keep" not in self.cfg["robot"].keys():
             self.cfg["robot"]["links_to_keep"] = []
-            self.cfg["robot"]["body_init_quat"]
         self.robot = Robot(
             asset_file=self.cfg["robot"]["asset_path"],
             foot_names=None,
