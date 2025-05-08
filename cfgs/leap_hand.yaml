@@ -172,10 +172,10 @@ environment:
     num_obs: 51
     num_priv_obs: 70
     obs_noise:
-      ang_vel: 0.1
-      dof_pos: 0.01
-      dof_vel: 0.5
-      gravity: 0.02
+      ang_vel: 0.0
+      dof_pos: 0.0
+      dof_vel: 0.0
+      gravity: 0.0
     obs_scales:
       ang_vel: 1.0
       dof_pos: 1.0
