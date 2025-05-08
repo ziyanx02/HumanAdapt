@@ -71,7 +71,7 @@ Start the timer.
 
 There is an example of Go2 at `envs/go2_env.py`, you could refer to this example and extract **useful** parts (including reward functions and additional information retrieved from the simulator) into `envs/state_wrapper.py`, `envs/reward_wrapper.py` and `cfgs/leap_hand.yaml`. 
 
-Unless necessary, do not create new function in both wrappers.
+Unless necessary, do not create new functions in both wrappers. You can run `python train_leaphand.py --debug` for debugging.
 
 Stop the timer when you can run `python train_leaphand.py` bug-free. Record the time as *code extraction*. In this stage, there is no need to tune the rewards.
 
