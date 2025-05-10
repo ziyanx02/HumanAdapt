@@ -467,7 +467,7 @@ class VecEnv:
 
     def step(self, actions):
         clip_actions = self.env_cfg['clip_actions']
-        self.actions = torch.clip(actions, -clip_actions, clip_actions) * 0
+        self.actions = torch.clip(actions, -clip_actions, clip_actions)
         exec_actions = self.last_actions if self.delay_action else self.actions
 
         for _ in range(self.env_cfg['decimation']):
