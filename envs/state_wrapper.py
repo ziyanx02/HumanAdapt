@@ -3,6 +3,7 @@ import torch
 
 import genesis as gs
 from envs.vec_env import VecEnv
+from utils import *
 
 class StateEnv(VecEnv):
     def __init__(self, num_envs, env_cfg, show_viewer, eval, debug, n_rendered_envs=1, device='cuda'):
@@ -30,3 +31,5 @@ class StateEnv(VecEnv):
     def compute_critic_observation(self):
         super().compute_critic_observation()
         # When changing the critic observation space, make sure to change the num_priv_obs in the config file
+
+    # Add additional methods here, i.e. self._update_desired_contact_states() self._update_feet_pos_local()

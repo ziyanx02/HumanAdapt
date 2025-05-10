@@ -1,0 +1,12 @@
+
+Description of the changes/additional configurations:
+- **urdf_path**: Specifies the path to the robot's URDF. Updated from "go2" to represent a robotic hand model ("leap_hand").
+- **links_to_keep**: Specifies links to include in simulation. Updated for the hand robotic model (e.g., "thumb_fingertip", "fingertip").
+- **num_actions, num_dofs, num_states**: Adjusted actions, degrees of freedom, and states to reflect the hand model's requirements.
+- **termination_contact_link_names**: Updated for the different environment.
+- **feet_link_names**: Set to an empty list as the environment does not involve legged locomotion.
+- **reward scales**: Introduced reward terms like "lin_vel," "ang_vel," and regularization terms such as "torques," "collision," and "action_smoothness" to define criteria for behavior and penalize undesired dynamics.
+- **observation space**: Key parameters like "num_obs" and "num_priv_obs" finalized for new environment dynamics based on hand manipulation requirements.
+- **reward tuning**: Adjusted configurations to allow reward scaling exploration during training.
+- **robot_scale, body_init_pos, body_init_quat**: Tailored to describe the physical properties and wheeled-like geometry initialization of the robotic hand setup.
+- **note in reward tuning**: Clarifies that the environment is specific to hand manipulation.

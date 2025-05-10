@@ -1,0 +1,197 @@
+environment:
+  PD_damping:
+    ? ''
+    : 1.0
+  PD_stiffness:
+    ? ''
+    : 40.0
+  PPO: false
+  action_scale: 0.25
+  added_mass_range:
+  - -1.0
+  - 3.0
+  armature: 0.05
+  base_init_pos:
+  - 0.0
+  - 0.0
+  - 0.24119752645492554
+  base_init_quat:
+  - 0.7071067690849304
+  - 0.0
+  - 0.7071068286895752
+  - 3.615632238052058e-09
+  body_init_pos:
+  - 0.0
+  - 0.0
+  - 0.24119752645492554
+  body_init_quat:
+  - 0.7071067690849304
+  - 0.0
+  - 0.7071068286895752
+  - 3.615632238052058e-09
+  body_link_name:
+  - base
+  clip_actions: 100.0
+  com_displacement_range:
+  - -0.01
+  - 0.01
+  control_freq: 50
+  decimation: 4
+  default_joint_angles:
+    '0': 0.0
+    '1': 0.0
+    '10': 0.0
+    '11': 0.0
+    '12': 0.0
+    '13': 0.0
+    '14': 0.0
+    '15': 0.0
+    '2': 0.0
+    '3': 0.0
+    '4': 0.0
+    '5': 0.0
+    '6': 0.0
+    '7': 0.0
+    '8': 0.0
+    '9': 0.0
+  delay_action: true
+  dof_damping: 0.0
+  dof_names:
+  - '0'
+  - '1'
+  - '10'
+  - '11'
+  - '12'
+  - '13'
+  - '14'
+  - '15'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  dof_pos_randomization: 0.3
+  episode_length_s: 20.0
+  feet_link_names: []
+  friction_range:
+  - 0.2
+  - 1.5
+  kd_scale_range:
+  - 0.8
+  - 1.2
+  kp_scale_range:
+  - 0.8
+  - 1.2
+  links_to_keep:
+  - thumb_fingertip
+  - fingertip
+  - fingertip_2
+  - fingertip_3
+  max_push_vel_xy: 1.0
+  motor_offset_range:
+  - -0.02
+  - 0.02
+  motor_strength_range:
+  - 0.9
+  - 1.1
+  num_actions: 16
+  num_dofs: 16
+  num_states: 42
+  observation:
+    num_obs: 51
+    num_priv_obs: 70
+    obs_noise:
+      ang_vel: 0.0
+      dof_pos: 0.0
+      dof_vel: 0.0
+      gravity: 0.0
+    obs_scales:
+      ang_vel: 1.0
+      dof_pos: 1.0
+      dof_vel: 0.05
+      lin_vel: 1.0
+  penalized_contact_link_names:
+  - base
+  - mcp_joint
+  - mcp_joint_2
+  - mcp_joint_3
+  - thumb_temp_base
+  - pip
+  - pip_2
+  - pip_3
+  - thumb_pip
+  - dip
+  - dip_2
+  - dip_3
+  - thumb_dip
+  period_length_s: 0.5
+  pos_randomization: 0.0
+  push_interval_s: -1
+  randomize_base_mass: false
+  randomize_com_displacement: false
+  randomize_friction: false
+  randomize_kd_scale: false
+  randomize_kp_scale: false
+  randomize_motor_offset: false
+  randomize_motor_strength: false
+  resampling_time_s: 4.0
+  reset_after_termination: true
+  reward:
+    reward_scales:
+      alive: 1.0
+  robot_scale: 1.0
+  rot_randomization: 0.1
+  termination_contact_link_names:
+  - base
+  termination_if_height_lower_than: 0.0
+  termination_if_pitch_greater_than: 0.4
+  termination_if_roll_greater_than: 0.4
+  urdf_path: urdf/leap_hand/leap_hand_right_glb.urdf
+  use_timeout: true
+learning:
+  PPO: false
+  algorithm:
+    action_noise_threshold: 0.0
+    class_name: TDO
+    clip_param: 0.2
+    desired_kl: 0.01
+    entropy_coef: 0.01
+    gamma: 0.99
+    lam: 0.95
+    learning_rate: 0.001
+    max_grad_norm: 1.0
+    num_learning_epochs: 5
+    num_mini_batches: 4
+    return_boosting_coef: 0.0
+    schedule: adaptive
+    td_entropy_coef: 0.0
+    use_clipped_value_loss: true
+    value_loss_coef: 1.0
+  empirical_normalization: false
+  exp_name: null
+  num_steps_per_env: 24
+  policy:
+    activation: elu
+    actor_hidden_dims:
+    - 512
+    - 256
+    - 128
+    class_name: ActorCriticTDO
+    critic_hidden_dims:
+    - 512
+    - 256
+    - 128
+    init_noise_std: 1.0
+  print_infos: true
+  record_interval: 50
+  reset_rate: 0.0
+  save_interval: 100
+  seed: 1
+  temporal_distribution:
+    class_name: TemporalDistribution
+    learning_rate: 0.001
+  wandb_entity: ziyanx02
+  wandb_project: Gait

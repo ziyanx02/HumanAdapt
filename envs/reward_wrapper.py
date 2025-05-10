@@ -4,11 +4,12 @@ import torch.nn as nn
 
 import genesis as gs
 from envs.state_wrapper import StateEnv
+from utils import *
 
 class RewardEnv(StateEnv):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-    
+
     def _reward_alive(self):
         """
         Reward for staying alive (not terminating).

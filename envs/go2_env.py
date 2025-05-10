@@ -6,37 +6,6 @@ import genesis as gs
 from genesis.engine.solvers.rigid.rigid_solver_decomp import RigidSolver
 from utils import *
 
-def quaternion_from_projected_gravity(gravity):
-    """
-    Compute the minimum quaternion to rotate v1 to v2 for batched tensors.
-    v1: Target batched vectors, shape (N, 3)
-    v2: Fixed vector (0, 0, -1), shape (3,)
-    Returns: Quaternions of shape (N, 4) (w, x, y, z)
-    """
-    # Normalize gravity vectors
-    v1 = torch.nn.functional.normalize(gravity, dim=-1)
-
-    # Define fixed vector
-    v2 = torch.zeros_like(gravity, dtype=gravity.dtype, device=gravity.device)
-    v2[..., 2] = -1.0
-
-    # Compute dot product and angle
-    dot = torch.sum(v1 * v2, dim=-1, keepdim=True)  # Shape (N, 1)
-    angle = torch.acos(torch.clamp(dot, -1.0, 1.0))  # Clamp to avoid NaN due to precision errors
-    
-    # Compute rotation axis
-    axis = torch.cross(v1.expand_as(v2), v2, dim=-1)  # Shape (N, 3)
-    axis_norm = torch.norm(axis, dim=-1, keepdim=True)
-    
-    # Handle parallel vectors (zero cross product)
-    axis = torch.where(axis_norm > 1e-6, axis / axis_norm, torch.tensor([1.0, 0.0, 0.0], device=v2.device))
-    
-    # Compute quaternion components
-    w = torch.cos(angle / 2)
-    xyz = axis * torch.sin(angle / 2)
-    
-    return torch.cat([w, xyz], dim=-1)  # Shape (N, 4)
-
 class Go2:
     def __init__(
         self,
