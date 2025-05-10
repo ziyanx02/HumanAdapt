@@ -6,10 +6,6 @@ from envs.vec_env import VecEnv
 from utils import *
 
 class StateEnv(VecEnv):
-    def __init__(self, num_envs, env_cfg, show_viewer, eval, debug, n_rendered_envs=1, device='cuda'):
-        super().__init__(num_envs, env_cfg, show_viewer, eval, debug, n_rendered_envs, device)
-        # Initialize the environment
-
     def _init_buffers(self):
         super()._init_buffers()
         # Add additional buffers here

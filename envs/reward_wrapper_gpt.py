@@ -7,9 +7,6 @@ from envs.state_wrapper_gpt import StateEnv
 from utils import *
 
 class RewardEnv(StateEnv):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def _reward_alive(self):
         """
         Reward for staying alive (not terminating).
@@ -17,14 +14,6 @@ class RewardEnv(StateEnv):
         - Encourages the robot to avoid conditions that lead to termination (e.g., falling).
         """
         return 1 - self.terminate_buf.float()
-
-    def _reward_terminate(self):
-        """
-        Penalty for termination.
-        - Returns 1 if the robot has terminated (terminate_buf is True), otherwise 0.
-        - Discourages behaviors that lead to termination.
-        """
-        return self.terminate_buf.float()
 
     def _reward_lin_vel(self):
         """
@@ -64,7 +53,7 @@ class RewardEnv(StateEnv):
         foot_forces = torch.norm(self.link_contact_forces[:, self.feet_link_indices, :], dim=-1)
         desired_contact = self.desired_contact_states
         return torch.mean((1 - desired_contact) * (1 - torch.exp(-foot_forces ** 2 / 100.)), dim=-1)
-    
+
     def _reward_feet_height(self):
         """
         Reward for tracking desired feet height.
@@ -74,7 +63,7 @@ class RewardEnv(StateEnv):
         """
         rew_foot_height = torch.square(self.feet_pos_local[..., 2] - self.desired_feet_pos_local[..., 2]) * (1 - self.desired_contact_states)
         return torch.mean(rew_foot_height, dim=-1)
-    
+
     def _reward_feet_pos(self):
         """
         Reward for tracking desired feet position (x, y axes).
@@ -83,6 +72,14 @@ class RewardEnv(StateEnv):
         """
         rew_foot_pos = torch.sum(torch.square(self.feet_pos_local[..., 0:2] - self.desired_feet_pos_local[..., 0:2]), dim=-1)
         return torch.mean(rew_foot_pos, dim=-1)
+
+    def _reward_terminate(self):
+        """
+        Penalty for termination.
+        - Returns 1 if the robot has terminated (terminate_buf is True), otherwise 0.
+        - Discourages behaviors that lead to termination.
+        """
+        return self.terminate_buf.float()
 
     def _reward_collision(self):
         """
@@ -99,7 +96,7 @@ class RewardEnv(StateEnv):
         - Discourages unnecessary vertical motion of the body.
         """
         return torch.square(self.body_lin_vel[:, 2])
-    
+
     def _reward_ang_vel_xy(self):
         """
         Penalty for body angular velocity in the x and y axes.
@@ -180,10 +177,11 @@ class RewardEnv(StateEnv):
 
     def _reward_dof_pos_limits(self):
         """
-        Penalty for dof positions too close to the limit.
+        Penalty for dof positions too close to the limit 
         - Compute the difference between current dof positions and dof pos limits.
         - Encourage proper dof position to avoid extreme pose.
+        - Critical for deploying in real.
         """
-        out_of_limits = -(self.dof_pos - self.dof_pos_limits[:, 0]).clip(max=0.0)  # lower limit
-        out_of_limits += (self.dof_pos - self.dof_pos_limits[:, 1]).clip(min=0.0)  # upper limit
-        return torch.sum(out_of_limits, dim=1)  # >=0
+        out_of_limits = -(self.dof_pos - self.dof_pos_limits[:, 0]).clip(max=0.0)
+        out_of_limits += (self.dof_pos - self.dof_pos_limits[:, 1]).clip(min=0.0)
+        return torch.sum(out_of_limits, dim=1)

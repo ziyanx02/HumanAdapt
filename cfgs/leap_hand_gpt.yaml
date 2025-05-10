@@ -20,21 +20,22 @@ environment:
   - 0.0
   - 0.7071068286895752
   - 3.615632238052058e-09
-  body_init_pos:
-  - 0.0
-  - 0.0
-  - 0.24119752645492554
-  body_init_quat:
-  - 0.7071067690849304
-  - 0.0
-  - 0.7071068286895752
-  - 3.615632238052058e-09
   body_link_name:
   - base
   clip_actions: 100.0
   com_displacement_range:
   - -0.01
   - 0.01
+  command:
+    ang_vel_range:
+    - -1.0
+    - 1.0
+    lin_vel_x_range:
+    - -1.0
+    - 1.0
+    lin_vel_y_range:
+    - -1.0
+    - 1.0
   control_freq: 50
   decimation: 4
   default_joint_angles:
@@ -75,10 +76,45 @@ environment:
   - '9'
   dof_pos_randomization: 0.3
   episode_length_s: 20.0
-  feet_link_names: []
+  feet_link_names:
+  - thumb_fingertip
+  - fingertip
+  - fingertip_2
+  - fingertip_3
   friction_range:
   - 0.2
   - 1.5
+  gait:
+    base_height_target: 0.3
+    duration:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    feet_height_target:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    frequency:
+    - 2.0
+    - 2.0
+    - 2.0
+    - 2.0
+    offset:
+    - 0.0
+    - 0.5
+    - 0.5
+    - 0.0
+    stationary_position:
+    - - 0.15
+      - -0.15
+    - - 0.15
+      - 0.15
+    - - -0.15
+      - -0.15
+    - - -0.15
+      - 0.15
   kd_scale_range:
   - 0.8
   - 1.2

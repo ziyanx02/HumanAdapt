@@ -70,7 +70,11 @@ environment:
   - dip_2
   - dip_3
   - thumb_dip
-  feet_link_names: []
+  feet_link_names:
+  - thumb_fingertip
+  - fingertip
+  - fingertip_2
+  - fingertip_3
   body_link_name:
   - base
   PD_stiffness:
@@ -137,27 +141,27 @@ environment:
     '8': 0.
     '9': 0.
   resampling_time_s: 4.0
-  randomize_base_mass: false
+  randomize_base_mass: true
   added_mass_range:
   - -1.0
   - 3.0
-  randomize_com_displacement: false
+  randomize_com_displacement: true
   com_displacement_range:
   - -0.01
   - 0.01
-  randomize_friction: false
+  randomize_friction: true
   friction_range:
   - 0.2
   - 1.5
-  randomize_kd_scale: false
+  randomize_kd_scale: true
   kd_scale_range:
   - 0.8
   - 1.2
-  randomize_kp_scale: false
+  randomize_kp_scale: true
   kp_scale_range:
   - 0.8
   - 1.2
-  randomize_motor_offset: false
+  randomize_motor_offset: true
   motor_offset_range:
   - -0.02
   - 0.02
@@ -170,14 +174,55 @@ environment:
   dof_pos_randomization: 0.3
   max_push_vel_xy: 1.0
   push_interval_s: -1
+  command:
+    lin_vel_x_range:
+    - -1.0
+    - 1.0
+    lin_vel_y_range:
+    - -1.0
+    - 1.0
+    ang_vel_range:
+    - -1.0
+    - 1.0
+  gait:
+    base_height_target: 0.3
+    duration:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    frequency:
+    - 2.0
+    - 2.0
+    - 2.0
+    - 2.0
+    offset:
+    - 0.0
+    - 0.5
+    - 0.5
+    - 0.0
+    stationary_position:
+    - - 0.15
+      - -0.15
+    - - 0.15
+      - 0.15
+    - - -0.15
+      - -0.15
+    - - -0.15
+      - 0.15
+    feet_height_target:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
   observation:
-    num_obs: 51
-    num_priv_obs: 70
+    num_obs: 59
+    num_priv_obs: 64
     obs_noise:
-      ang_vel: 0.0
-      dof_pos: 0.0
-      dof_vel: 0.0
-      gravity: 0.0
+      ang_vel: 0.1
+      dof_pos: 0.01
+      dof_vel: 0.1
+      gravity: 0.02
     obs_scales:
       ang_vel: 1.0
       dof_pos: 1.0
@@ -185,35 +230,28 @@ environment:
       lin_vel: 1.0
   reward:
     reward_scales:
-      alive: 1.0
       lin_vel: 1.0
       ang_vel: 0.5
-      lin_vel_z: -2.0
+      alive: 3.0
       ang_vel_xy: -0.05
-      base_height: -1.0
-      contact_force: -1.0
-      torques: -0.1
+      base_height: -30.0
       dof_acc: -0.05
-      dof_vel: -0.05
-      dof_pos_diff: -0.05
-      collision: -0.1
-      contact_vel: -0.1
-      action_smoothness_1: -0.005
-      action_smoothness_2: -0.01
+      dof_vel: -0.0
+      dof_pos_diff: -0.1
+      lin_vel_z: -2.0
+      orientation: -5.0
+      contact_force: -1.0
+      contact_vel: -1.0
+      feet_height: -10.0
+      feet_pos: -10.0
+      action_smoothness_1: -0.5
+      action_smoothness_2: -0.5
+      torques: -0.0001
     soft_dof_pos_limit: 0.9
     tracking_sigma: 0.25
   robot_scale: 1.0
-  body_init_pos:
-  - 0.0
-  - 0.0
-  - 0.24119752645492554
-  body_init_quat:
-  - 0.7071067690849304
-  - 0.0
-  - 0.7071068286895752
-  - 3.615632238052058e-09
 reward_tuning:
   num_iterations: 3
   num_samples: 4
   num_logpoints: 10
-  note: Hand manipulation environment.
+  note: hand grasping movement task
